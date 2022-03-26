@@ -18,14 +18,37 @@ class BooksController < ApplicationController
   end
 
   def create
+    @book = Book.new(book_params)
+
+    respond_to do |format|
+      if @book.save
+        format.json { render json: @book, status: :created }
+        format.xml { render xml: @book, status: :created }
+      else
+        format.json { render json: @book.errors, status: :unprocessable_entity }
+        format.xml { render xml: @book.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
-
+    respond_to do |format|
+      if @book.update(book_params)
+        format.json { render json: @book, status: :ok }
+        format.xml { render xml: @book, status: :ok }
+      else
+        format.json { render json: @book.errors, status: :unprocessable_entity }
+        format.xml { render xml: @book.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
-
+    @book.destroy
+    respond_to do |format|
+      format.json { head :no_content }
+      format.xml { head :no_content }
+    end
   end
 
   def unpublish
@@ -39,6 +62,6 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :description, :author_id, :cover, :price)
+    params.require(:book).permit(:title, :description, :user_id, :cover, :price)
   end
 end
