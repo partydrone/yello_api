@@ -5,6 +5,7 @@ RUN apt-get update -qq && apt-get install -y build-essential \
   curl \
   git \
   libpq-dev \
+  libvips \
   tzdata \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get clean

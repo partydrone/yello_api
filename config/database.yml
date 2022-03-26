@@ -1,7 +1,7 @@
 default: &default
   adapter: "postgresql"
   encoding: "unicode"
-  database: "<%= ENV.fetch("POSTGRES_DB") { "rails_api" } %>"
+  database: "<%= ENV.fetch("POSTGRES_DB") { "yello_api" } %>"
   username: "<%= ENV.fetch("POSTGRES_USER") { "postgres" } %>"
   password: "<%= ENV.fetch("POSTGRES_PASSWORD") { "postgres" } %>"
   host: "<%= ENV.fetch("POSTGRES_HOST") { "db" } %>"
@@ -11,12 +11,12 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV.fetch("POSTGRES_DB") { "rails_api" } %>_development
+  database: <%= ENV.fetch("POSTGRES_DB") { "yello_api" } %>_development
 
 test:
   <<: *default
-  database: <%= ENV.fetch("POSTGRES_DB") { "rails_api" } %>_test
+  database: <%= ENV.fetch("POSTGRES_DB") { "yello_api" } %>_test
 
 production:
   <<: *default
-  database: <%= ENV.fetch("POSTGRES_DB") { "rails_api" } %>_production
+  database: <%= ENV.fetch("POSTGRES_DB") { "yello_api" } %>_production
