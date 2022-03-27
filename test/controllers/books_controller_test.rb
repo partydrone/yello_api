@@ -15,9 +15,9 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Book.count") do
       post books_url, params: {
         book: {
-          user_id: users(:one).id,
+          author_id: users(:one).id,
           description: "Super exciting book",
-          price: "12.99",
+          price: 12.99,
           title: "New Book"
         } },
         as: :json
@@ -41,5 +41,17 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :no_content
+  end
+
+  test "should render JSON" do
+    get books_url, headers: { "Accept" => "application/json" }
+
+    assert_equal response.body, Book.all.to_json(include: :author, except: :author_id)
+  end
+
+  test "should render XML" do
+    get books_url, headers: { "Accept" => "application/xml" }
+
+    assert_equal response.body, Book.all.as_json(include: :author, except: :author_id).to_xml
   end
 end

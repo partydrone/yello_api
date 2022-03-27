@@ -45,11 +45,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_26_195411) do
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.bigint "user_id", null: false
+    t.bigint "author_id", null: false
     t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_books_on_user_id"
+    t.index ["author_id"], name: "index_books_on_author_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -60,5 +60,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_26_195411) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "books", "users"
+  add_foreign_key "books", "users", column: "author_id"
 end
