@@ -7,6 +7,14 @@ describe Book do
     _(subject).must_respond_to :title
   end
 
+  it "can search by title" do
+    books = Book.search("one")
+
+    books.each do |book|
+      _(book.title).must_match /one/i
+    end
+  end
+
   it "has a description" do
     _(subject).must_respond_to :description
   end
