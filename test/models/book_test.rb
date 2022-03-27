@@ -22,4 +22,24 @@ describe Book do
   it "has a price" do
     _(subject).must_respond_to :price
   end
+
+  it "has an unpublished date" do
+    _(subject).must_respond_to :unpublished_at
+  end
+
+  it "unpublishes itself" do
+    book = Book.create!(
+      title: "Temp Book",
+      description: "This book will be unpublished.",
+      author: User.create!(pseudonym: "Unpublished Author"),
+      price: 12.99
+    )
+
+    _(book.unpublished_at).must_be_nil
+
+    book.unpublish!
+    book.reload
+
+    _(book.unpublished_at).wont_be_nil
+  end
 end

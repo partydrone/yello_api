@@ -2,18 +2,18 @@ require "test_helper"
 
 class BooksControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get books_url, headers: { "Accept" => "application/json" }
+    get books_path, as: :json
     assert_response :success
   end
 
   test "should get show" do
-    get book_url(books(:one)), headers: { "Accept" => "application/json" }
+    get book_path(books(:one)), as: :json
     assert_response :success
   end
 
   test "should create a new book" do
     assert_difference("Book.count") do
-      post books_url, params: {
+      post books_path, params: {
         book: {
           author_id: users(:one).id,
           description: "Super exciting book",
@@ -29,7 +29,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   test "should update a book" do
     book = books(:one)
     old_title = book.title
-    put book_url(books(:one)), params: { title: "New Title" }, as: :json
+    put book_path(book), params: { title: "New Title" }, as: :json
     book.reload
 
     assert_equal "New Title", book.title
@@ -37,21 +37,15 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
 
   test "should delete a book" do
     assert_difference("Book.count", -1) do
-      delete book_url(books(:one)), as: :json
+      delete book_path(books(:one)), as: :json
     end
 
     assert_response :no_content
   end
 
-  test "should render JSON" do
-    get books_url, headers: { "Accept" => "application/json" }
+  test "should unpublish a book" do
+    delete unpublish_book_path(books(:one)), as: :json
 
-    assert_equal response.body, Book.all.to_json(include: :author, except: :author_id)
-  end
-
-  test "should render XML" do
-    get books_url, headers: { "Accept" => "application/xml" }
-
-    assert_equal response.body, Book.all.as_json(include: :author, except: :author_id).to_xml
+    assert_response :ok
   end
 end

@@ -52,7 +52,12 @@ class BooksController < ApplicationController
   end
 
   def unpublish
+    @book.unpublish!
 
+    respond_to do |format|
+      format.json { render json: @book, status: :ok }
+      format.xml { render xml: @book, status: :ok }
+    end
   end
 
   private
