@@ -1,7 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  username: user1
+  password_digest: <%= BCrypt::Password.create('password', cost: 4) %>
   pseudonym: Author One
 
 two:
+  username: user1
+  password_digest: <%= BCrypt::Password.create('password', cost: 4) %>
   pseudonym: Author Two
+
+anonymous:
+  username: anonymous
+  password_digest: <%= BCrypt::Password.create('password', cost: 4) %>
+  pseudonym: Anonymous

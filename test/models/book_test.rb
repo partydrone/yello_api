@@ -36,10 +36,17 @@ describe Book do
   end
 
   it "unpublishes itself" do
+    user = User.create!(
+      pseudonym: "Unpublished Author",
+      username: "unpub",
+      password: "password",
+      password_confirmation: "password"
+    )
+
     book = Book.create!(
       title: "Temp Book",
       description: "This book will be unpublished.",
-      author: User.create!(pseudonym: "Unpublished Author"),
+      author: user,
       price: 12.99
     )
 
